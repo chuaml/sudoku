@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>Vite App</title>
+    <style>
+      .sudoku, .sudoku > .box {
+        display: grid;
+        grid-template:
+          "1 2 3" 1fr
+          "4 5 6" 1fr
+          "7 8 9" 1fr;
+        margin: 0;
+        border: 2px solid black;
+      }
+      .cell {
+        margin: 0;
+        align-content: center;
+        border: 1px solid black;
+      }
+      .cell:focus {
+        background-color: cyan;
+      }
+      .cell * {
+        display: block;
+        margin: 0;
+        min-width: 0;
+        min-height: 0;
+        max-width: 100%;
+        text-align: center;
+      }
+      .cell > .value {
+        padding: 0;
+        border: 0;
+        font-size: 2rem;
+        width: 100%;
+      }
+      .cell > .notes {
+        display: grid;
+        grid-template:
+          ". . ." 1fr
+          ". . ." 1fr
+          ". . ." 1fr;
+      }
+      .notes {
+        width: 1ch;
+        max-width: 1ch;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: clip;
+        text-align: center;
+        align-items: center;
+      }
+      .sudoku {
+        width: calc(100% - 4px);
+        aspect-ratio: 1;
+      }
+      body, #app {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <form class="sudoku" method="post">
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="cell">
+            <input class="value" maxlength="1" inputmode="numeric" required />
+            <div class="notes">
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
