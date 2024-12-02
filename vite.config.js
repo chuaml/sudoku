@@ -7,9 +7,9 @@ export default {
         VitePWA({
             registerType: "autoUpdate",
             manifest: {
-                name: "My Awesome App",
-                short_name: "MyApp",
-                description: "My Awesome App description",
+                name: "Sudoku by ML",
+                short_name: "Sudoku",
+                description: "A Sudoku demo app",
                 theme_color: "#ffffff",
                 icons: [
                     {
