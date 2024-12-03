@@ -1,3 +1,7 @@
+:root {
+  font-size: 16px;
+}
+
 html {
   background-color: #ddd;
 }
@@ -13,10 +17,6 @@ html {
   }
 }
 
-.sudoku {
-  background-color: #eee;
-}
-
 .sudoku,
 .sudoku>.box {
   display: grid;
@@ -26,6 +26,14 @@ html {
     "7 8 9" 1fr;
   margin: 0;
   border: 2px solid black;
+}
+
+.sudoku {
+  background-color: #eee;
+  width: clamp(300px, calc(100% - 4px), 500px);
+  aspect-ratio: 1;
+  margin: auto;
+  margin-top: 1rem;
 }
 
 .cell {
@@ -73,10 +81,8 @@ html {
   align-items: center;
 }
 
-.sudoku {
-  width: calc(100% - 4px);
-  aspect-ratio: 1;
-}
+
+
 
 body,
 #app {
