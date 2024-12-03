@@ -1,4 +1,21 @@
+html {
+  background-color: #ddd;
+}
 
+/* darkmode */
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #222;
+  }
+
+  body {
+    filter: invert(0.9) hue-rotate(180deg);
+  }
+}
+
+.sudoku {
+  background-color: #eee;
+}
 
 .sudoku,
 .sudoku>.box {
