@@ -3,6 +3,7 @@ export class Sudoku {
     row_s = [null, null, null, null, null, null, null, null, null];
     column_s = [null, null, null, null, null, null, null, null, null];
 
+    start_time = new Date();
     constructor(sudokuElem) {
         for (const i in this.boxes) {
             const B = sudokuElem.querySelectorAll(".box");
@@ -97,8 +98,8 @@ export class Sudoku {
         }
     }
 
-    async fillRemaining(dimension_s) {
-        this._fillRemaining(
+    fillRemaining(dimension_s) {
+        return this._fillRemaining(
             dimension_s,
             () => new Promise((r) => setTimeout(r, 0)),
         );
@@ -122,7 +123,7 @@ export class Sudoku {
                     }
                 }
                 if (isToBackTrack) { // backtrack
-                    cell.value = "";
+                    if (cell.readOnly !== true) cell.value = "";
                     ++i_c;
                     if (i_c >= Cells.length) {
                         break;
@@ -131,13 +132,14 @@ export class Sudoku {
                     --i_c;
                 }
             }
+            await mainToRun();
+
             if (isToBackTrack) { // backtrack
                 ++i_d;
                 i_c = 0;
                 if (i_d >= dimension_s.length) {
                     break;
                 }
-                await mainToRun();
             } else { // advance
                 --i_d;
             }
