@@ -10,7 +10,7 @@ export default {
                 name: "Sudoku by ML",
                 short_name: "Sudoku",
                 description: "A Sudoku demo app",
-                theme_color: "#ffffff",
+                theme_color: "##e4c7f8",
                 icons: [
                     {
                         "src": "icons/manifest-icon-192.maskable.png",
