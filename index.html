@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css" />
     <title>Sudoku demo</title>
   </head>
   <body>
     <div id="app">
-      <form class="sudoku" method="post">
+      <div class="sudoku" method="post">
         <div class="box">
           <div class="cell r1 c1">
             <input class="value" maxlength="1" inputmode="numeric" required />
@@ -1162,7 +1162,14 @@
             </div>
           </div>
         </div>
-      </form>
+      </div>
+
+      <div class="control-wrapper">
+        <button id="btnCheck">Check</button>
+        <button id="btnAutoFill">Auto Fill</button>
+
+        <button id="btnClear">Clear</button>
+      </div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

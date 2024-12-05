@@ -101,7 +101,7 @@ export class Sudoku {
     fillRemaining(dimension_s) {
         return this._fillRemaining(
             dimension_s,
-            () => new Promise((r) => setTimeout(r, 0)),
+            () => new Promise((r) => setTimeout(r, 20)),
         );
     }
 
@@ -121,10 +121,12 @@ export class Sudoku {
                             break;
                         }
                     }
+                    await mainToRun();
                 }
                 if (isToBackTrack) { // backtrack
                     if (cell.readOnly !== true) cell.value = "";
                     ++i_c;
+                    await mainToRun();
                     if (i_c >= Cells.length) {
                         break;
                     }
@@ -132,7 +134,6 @@ export class Sudoku {
                     --i_c;
                 }
             }
-            await mainToRun();
 
             if (isToBackTrack) { // backtrack
                 ++i_d;
@@ -175,6 +176,24 @@ export class Sudoku {
             if (r.hasDuplicatedValue() === true) return true;
         }
         return false;
+    }
+
+    clear() {
+        for (const b of this.boxes) {
+            b.Cells.forEach((x) => {
+                if (x.readOnly !== true) x.value = "";
+            });
+        }
+        for (const c of this.column_s) {
+            c.Cells.forEach((x) => {
+                if (x.readOnly !== true) x.value = "";
+            });
+        }
+        for (const r of this.row_s) {
+            r.Cells.forEach((x) => {
+                if (x.readOnly !== true) x.value = "";
+            });
+        }
     }
 }
 
