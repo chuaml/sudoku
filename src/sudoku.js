@@ -56,7 +56,20 @@ export class Sudoku {
                 randomDigitList.pop(),
             );
         }
-        await this._fillRemaining(this.boxes, async () => null);
+
+        let computeCount = 0;
+        const maxComputeCount = 32767;
+        await this._fillRemaining(this.boxes, () =>
+            new Promise((r, err) => {
+                if (computeCount++ > maxComputeCount) {
+                    err(
+                        "auto fill stopped, maximum compute count reached",
+                    );
+                } else {
+                    r();
+                }
+            }));
+            console.log({computeCount});
 
         const len = this.boxes.length;
         for (a = 0; a < len; ++a) {
@@ -68,15 +81,15 @@ export class Sudoku {
                 );
             }
         }
-        this._setCurrentAsGiven();
+        this._setFilledCellAsReadOnly(true);
     }
 
-    _setCurrentAsGiven() {
+    _setFilledCellAsReadOnly(isReadOnly) {
         let len = this.boxes.length;
         for (let i = 0; i < len; ++i) {
             this.boxes[i].Cells.forEach((x) => {
                 if (x.value !== "") {
-                    x.readOnly = true;
+                    x.readOnly = isReadOnly;
                 }
             });
         }
@@ -84,7 +97,7 @@ export class Sudoku {
         for (let i = 0; i < len; ++i) {
             this.row_s[i].Cells.forEach((x) => {
                 if (x.value !== "") {
-                    x.readOnly = true;
+                    x.readOnly = isReadOnly;
                 }
             });
         }
@@ -92,17 +105,35 @@ export class Sudoku {
         for (let i = 0; i < len; ++i) {
             this.column_s[i].Cells.forEach((x) => {
                 if (x.value !== "") {
-                    x.readOnly = true;
+                    x.readOnly = isReadOnly;
                 }
             });
         }
     }
 
+    setCurrentAsGiven() {
+        this._setFilledCellAsReadOnly(true);
+    }
+
+    setCurrentAsInput() {
+        this._setFilledCellAsReadOnly(false);
+    }
+
     fillRemaining(dimension_s) {
-        return this._fillRemaining(
-            dimension_s,
-            () => new Promise((r) => setTimeout(r, 20)),
-        );
+        let computeCount = 0;
+        const maxComputeCount = 32767;
+        return this._fillRemaining(dimension_s, () =>
+            new Promise((r, err) => {
+                setTimeout((_) => {
+                    if (computeCount++ > maxComputeCount) {
+                        err(
+                            "auto fill stopped, maximum compute count reached",
+                        );
+                    } else {
+                        r();
+                    }
+                }, 20);
+            }));
     }
 
     async _fillRemaining(dimension_s, mainToRun) {
@@ -124,7 +155,9 @@ export class Sudoku {
                     await mainToRun();
                 }
                 if (isToBackTrack) { // backtrack
-                    if (cell.readOnly !== true) cell.value = "";
+                    if (cell.readOnly !== true) {
+                        cell.value = "";
+                    }
                     ++i_c;
                     await mainToRun();
                     if (i_c >= Cells.length) {
