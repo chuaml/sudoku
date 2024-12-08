@@ -79,3 +79,17 @@ document.querySelector("#btnClear").addEventListener("click", async (e) => {
     );
   }
 });
+
+document.querySelector("#btnEdit").addEventListener("click", (e) => {
+  if (e.target["isEditing"] === "1") {
+    if (confirm("Save as given?")) {
+      sudoku.setCurrentAsGiven();
+      e.target["isEditing"] = "0";
+      e.target.innerText = "Edit";
+    }
+  } else {
+    sudoku.setCurrentAsInput();
+    e.target["isEditing"] = "1";
+    e.target.innerText = "Save changes";
+  }
+});

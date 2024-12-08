@@ -68,15 +68,15 @@ export class Sudoku {
                 );
             }
         }
-        this._setCurrentAsGiven();
+        this._setFilledCellAsReadOnly(true);
     }
 
-    _setCurrentAsGiven() {
+    _setFilledCellAsReadOnly(isReadOnly) {
         let len = this.boxes.length;
         for (let i = 0; i < len; ++i) {
             this.boxes[i].Cells.forEach((x) => {
                 if (x.value !== "") {
-                    x.readOnly = true;
+                    x.readOnly = isReadOnly;
                 }
             });
         }
@@ -84,7 +84,7 @@ export class Sudoku {
         for (let i = 0; i < len; ++i) {
             this.row_s[i].Cells.forEach((x) => {
                 if (x.value !== "") {
-                    x.readOnly = true;
+                    x.readOnly = isReadOnly;
                 }
             });
         }
@@ -92,10 +92,18 @@ export class Sudoku {
         for (let i = 0; i < len; ++i) {
             this.column_s[i].Cells.forEach((x) => {
                 if (x.value !== "") {
-                    x.readOnly = true;
+                    x.readOnly = isReadOnly;
                 }
             });
         }
+    }
+
+    setCurrentAsGiven() {
+        this._setFilledCellAsReadOnly(true);
+    }
+
+    setCurrentAsInput() {
+        this._setFilledCellAsReadOnly(false);
     }
 
     fillRemaining(dimension_s) {
