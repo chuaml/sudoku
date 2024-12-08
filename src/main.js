@@ -49,6 +49,19 @@ sdk.addEventListener("input", (e) => { // check
   }, 0);
 });
 
+let hasEdited = false;
+sdk.addEventListener("input", (e) => { // check
+  hasEdited = true;
+}, { once: true });
+
+window.addEventListener("beforeunload", function (e) {
+  if (hasEdited === true) {
+    e.preventDefault();
+    e.returnValue = true;
+    return "Abandon current game?";
+  }
+});
+
 document.querySelector("#btnCheck").addEventListener("click", function (e) {
   if (sudoku.isValid()) {
     winGame();
