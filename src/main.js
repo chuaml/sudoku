@@ -11,7 +11,7 @@ const winGame = (_) => {
   const sec = Math.floor((Date.now() - sudoku.start_time.getTime()) / 1000);
   const min = Math.floor(sec / 60);
 
-  alert(`Complete! Time taken: ${min}m ${sec}s`);
+  alert(`Complete! Time taken: ${min}m ${sec % 60}s`);
 };
 
 const clear = (e) => {
@@ -118,7 +118,7 @@ if (location.host.startsWith("localhost") === false && location.host !== "") {
         case "KeyJ":
         case "KeyI":
           e.preventDefault();
-          alert('What you want?');
+          alert("What you want?");
       }
     }
   });
@@ -126,3 +126,25 @@ if (location.host.startsWith("localhost") === false && location.host !== "") {
     e.preventDefault();
   });
 }
+
+// timer
+window.addEventListener("DOMContentLoaded", (ev) => {
+  const timer = document.querySelector("#timer");
+  const startTime = Date.now() - sudoku.start_time.getTime();
+  function tick(time) {
+    const elapsed = time - startTime;
+    const targetNext = elapsed + 1000 + startTime;
+    setTimeout(
+      () => requestAnimationFrame(tick),
+      targetNext - performance.now(),
+    );
+
+    // update UI
+    const seconds = Math.round(elapsed / 1000);
+    const min = Math.floor(seconds / 60);
+    timer.innerText = `${min.toString().padStart(2, "0")}:${
+      (seconds % 60).toString().padStart(2, "0")
+    }`;
+  }
+  tick(startTime);
+});

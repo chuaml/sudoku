@@ -57,7 +57,7 @@ input:not([readonly]) {
   width: clamp(300px, calc(100% - 4px), 500px);
   aspect-ratio: 1;
   margin: auto;
-  margin-top: 4rem;
+  margin-top: 1rem;
 }
 
 .cell {
@@ -125,4 +125,10 @@ button {
 
 button:active {
   cursor: default;
+}
+
+#timer{
+  margin: 1rem auto;
+  font-size: 1.2rem;
+  width: min-content;
 }
