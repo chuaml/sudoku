@@ -106,3 +106,23 @@ document.querySelector("#btnEdit").addEventListener("click", (e) => {
     e.target.innerText = "Save changes";
   }
 });
+
+// no inspect on production
+if (location.host.startsWith("localhost") === false && location.host !== "") {
+  setInterval((_) => {
+    debugger;
+  }, 2000);
+  window.addEventListener("keydown", function (e) {
+    if (e.ctrlKey === true && e.shiftKey === true) {
+      switch (e.code) {
+        case "KeyJ":
+        case "KeyI":
+          e.preventDefault();
+          alert('What you want?');
+      }
+    }
+  });
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+}
