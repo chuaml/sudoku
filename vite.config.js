@@ -1,5 +1,9 @@
 /** @type {import('vite').UserConfig} */
 import { VitePWA } from "vite-plugin-pwa";
+// import { fileURLToPath } from 'node:url';
+// import { dirname, resolve } from "node:path";
+
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
     base: "./",
@@ -59,4 +63,17 @@ export default {
             },
         }),
     ],
+    appType: 'mpa', // shows 404 for non-existing url path and navigate to the correct xyz.html files when url is enter
+    build: {
+        rollupOptions: {
+            input: { // url mapping
+                // main: resolve(__dirname, 'index.html'), // example default index page
+                // some_other_name: 'punch-game.html', // rename does not work for .html file, original default file name will always be use as path instead
+
+                main: 'index.html',
+                'punch-game': 'punch-game.html', // default file name mapping
+
+            },
+        },
+    },
 };
