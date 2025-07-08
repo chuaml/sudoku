@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punch a Puppet</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Main Container */
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        /* Welcome Screen Styling */
+        #welcome-screen h1 {
+            color: #ff4757;
+        }
+
+        #name-form input {
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            width: calc(100% - 24px);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        #name-form button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #2ed573;
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #name-form button:hover {
+            background-color: #20bf6b;
+        }
+
+        /* Game Screen Styling */
+        #game-screen {
+            display: none;
+            /* Hidden by default */
+            position: relative;
+        }
+
+        /* Puppet Styling */
+        #puppet {
+            position: relative;
+            cursor: grabbing;
+            user-select: none;
+            display: block;
+            transition: transform 0.1s;
+
+            &:active {
+                cursor: none;
+            }
+        }
+
+        #puppet-body {
+            width: 150px;
+            height: 150px;
+            background-color: #ffda79;
+            border-radius: 50%;
+            border: 3px solid #ccae62;
+            position: relative;
+            margin: auto;
+        }
+
+        #puppet-body::before,
+        #puppet-body::after {
+            /* Eyes */
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border-radius: 50%;
+            border: 2px solid #333;
+            top: 40px;
+        }
+
+        #puppet-body::before {
+            left: 30px;
+        }
+
+        #puppet-body::after {
+            right: 30px;
+        }
+
+        /* Eye pupils */
+        .eye-pupil {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            border-radius: 50%;
+            top: 50px;
+        }
+
+        #pupil-left {
+            left: 40px;
+        }
+
+        #pupil-right {
+            right: 40px;
+            z-index: 2;
+        }
+
+
+        #puppet-mouth {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            border: 3px solid #333;
+            border-top: none;
+            border-radius: 0 0 60px 60px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #c0392b;
+        }
+
+        #puppet-name {
+            background-color: #ff4757;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            border: 3px solid #c0392b;
+        }
+
+        /* Punch Animation */
+        .punched {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-10px);
+                transform: translateY(5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* Hit effect styling */
+        .hit-effect {
+            position: absolute;
+            font-size: 50px;
+            pointer-events: none;
+            /* So it doesn't interfere with clicks */
+            animation: hit-fade 0.3s forwards;
+            z-index: 10;
+        }
+
+        @keyframes hit-fade {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Weapon Store Styling */
+        #weapon-store {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 2px dashed #ccc;
+        }
+
+        #weapon-store h3 {
+            margin-top: 0;
+            color: #1e90ff;
+        }
+
+        .weapon-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .weapon {
+            font-size: 40px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .weapon:hover {
+            transform: scale(1.1);
+        }
+
+        .weapon.selected {
+            background-color: #1e90ff40;
+            box-shadow: 0 0 15px #1e90ff80;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Screen 1: Welcome and Name Input -->
+        <div id="welcome-screen">
+            <h1>Punch-a-Puppet!</h1>
+            <p>Enter a name for the puppet you want to punch.</p>
+            <form id="name-form">
+                <input type="text" id="name-input" placeholder="Enter name here..." required>
+                <button type="submit">Create Puppet</button>
+            </form>
+        </div>
+
+        <!-- Screen 2: The Game -->
+        <div id="game-screen">
+            <div id="puppet">
+                <div id="puppet-body">
+                    <div class="eye-pupil" id="pupil-left"></div>
+                    <div class="eye-pupil" id="pupil-right"></div>
+                    <div id="puppet-mouth"></div>
+                </div>
+                <div id="puppet-name">Puppet Name</div>
+            </div>
+
+            <div id="weapon-store">
+                <h3>skin</h3>
+                <div class="weapon-container">
+                    <div class="weapon selected" data-weapon="👊">👊</div>
+                    <div class="weapon" data-weapon="🥊">🥊</div>
+                    <div class="weapon" data-weapon="🔨">🔨</div>
+                    <div class="weapon" data-weapon="👊🏿">👊🏿</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const nameForm = document.getElementById('name-form');
+        const nameInput = document.getElementById('name-input');
+        const puppetNameDisplay = document.getElementById('puppet-name');
+        const puppet = document.getElementById('puppet');
+        const weapons = document.querySelectorAll('.weapon');
+        const puppetBody = document.querySelector('body');
+
+        // Game State
+        let currentWeapon = '👊'; // Default weapon
+
+        // --- Event Listeners ---
+
+        // Handle form submission to start the game
+        const url = new URL(location.href);
+        const name = url.searchParams.get('name');
+        if (name) {
+            puppetNameDisplay.textContent = name;
+            welcomeScreen.style.display = 'none';
+            gameScreen.style.display = 'block';
+        }
+        else {
+            nameForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Prevent page reload
+                const name = nameInput.value.trim();
+                if (name) {
+                    url.searchParams.set('name', name);
+                    location.href = url.toString();
+                }
+            });
+        }
+
+        // Handle clicking the puppet
+        let qid_resetShake = 0;
+        let doShake = true;
+        let resetShake = _ => { doShake = true; };
+        function animatePunch(e) {
+            // 1. Add punch animation class
+            puppet.classList.add('punched');
+
+            // 2. Create and display the hit effect
+            createHitEffect(e.clientX - 25, e.clientY - 25);
+
+            // 3. Remove the animation class after it finishes
+            if (doShake) {
+                setTimeout(() => {
+                    puppet.classList.remove('punched');
+                }, 500); // Duration of the shake animation
+                doShake = false
+                setTimeout(resetShake, 500);
+            } else {
+                clearTimeout(qid_resetShake);
+                qid_resetShake = setTimeout(() => {
+                    puppet.classList.remove('punched');
+                }, 500); // Duration of the shake animation
+            }
+        }
+        // puppet.addEventListener('click', animatePunch);
+        puppet.addEventListener('mouseup', e => setTimeout(animatePunch, 150, e));
+        puppet.addEventListener('mousedown', animatePunch);
+        puppet.addEventListener('dblclick', animatePunch);
+        puppet.addEventListener('contextmenu', function (e) {
+            animatePunch(e);
+            e.preventDefault();
+        });
+        puppet.addEventListener('mouseover', function (e) {
+            if (e.ctrlKey && e.isTrusted) animatePunch(e);
+        });
+
+        // Handle weapon selection
+        weapons.forEach(weapon => {
+            weapon.addEventListener('click', () => {
+                // Update the current weapon
+                currentWeapon = weapon.getAttribute('data-weapon');
+
+                // Update the 'selected' class for visual feedback
+                weapons.forEach(w => w.classList.remove('selected'));
+                weapon.classList.add('selected');
+            });
+        });
+
+        // --- Functions ---
+
+        /**
+         * Creates a visual effect at the click coordinates.
+         * The effect is the currently selected weapon emoji.
+         * @param {number} x - The horizontal coordinate of the click.
+         * @param {number} y - The vertical coordinate of the click.
+         */
+        function createHitEffect(x, y) {
+            const hitEffect = document.createElement('div');
+            hitEffect.classList.add('hit-effect');
+            hitEffect.textContent = currentWeapon;
+
+            // Position the effect where the user clicked
+            hitEffect.style.left = `${x}px`;
+            hitEffect.style.top = `${y}px`;
+
+            document.body.appendChild(hitEffect);
+
+            // Remove the effect from the DOM after its animation ends
+            setTimeout(() => {
+                hitEffect.remove();
+            }, 250); // Duration of the hit-fade animation
+        }
+    </script>
+</body>
+
+</html>
