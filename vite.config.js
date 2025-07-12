@@ -59,6 +59,23 @@ export default {
                             },
                         },
                     },
+                    {
+                        urlPattern: /[^?]*?/i,
+                        handler: "NetworkFirst", // Cache StrategyName
+                        options: {
+                            cacheName: "page-cache",
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 0,
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
+                        },
+                    },
+                ],
+                navigateFallbackDenylist: [
+                    /^[^?]+?/  // anything with querystring do not use fallback index.html as cache when cach miss
                 ],
             },
         }),
