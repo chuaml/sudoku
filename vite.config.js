@@ -43,7 +43,7 @@ export default {
                 ],
             },
             workbox: {
-                // globPatterns: ['**/*.{js,css,html,ico,png,svg}'], // precache, eager load and cache
+                globPatterns: ['**/*.{js,css,html,ico,png,svg}'], // stuff to cache and allow offline usage
                 runtimeCaching: [
                     {
                         urlPattern: /\.(png|jpg|jpeg|svg|gif)$/i,
@@ -59,6 +59,9 @@ export default {
                             },
                         },
                     },
+                ],
+                navigateFallbackDenylist: [
+                    /^[^?]+?/  // anything with querystring do not use fallback index.html as cache when cach miss
                 ],
             },
         }),
